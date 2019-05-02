@@ -13,14 +13,13 @@ Converting hexadecimal to decimal:
 	- Know the decimal number for the hexadecimal characters
 	- Take the sum for the result
 Converting fixed point decimal to binary
-	- Divide decimal number by 2 and keep track of the remainder 	(either 0 or 1)
+	- Divide decimal number by 2 and keep track of the remainder (either 0 or 1)
 	- Binary number starts at the bottom
 Converting floating point decimal to binary
 	- Do the left side of the decimal like a fixed point
 	- Multiply digits to the right side of the decimal by 2
-	- The left side of the decimal will either turn to 0 or 1 
-	which will be the binary number
-	- Each time you multiply by 2, don't multiply the digit to 	the left of the decimal
+	- The left side of the decimal will either turn to 0 or 1 which will be the binary number
+	- Each time you multiply by 2, don't multiply the digit to the left of the decimal
 Converting octal to binary
 	- Convert each individual digit to binary
 Converting hexadecimal to binary
@@ -36,11 +35,11 @@ Converting binary to hexadecimal
 	- Split number into groups of 4
 	- Convert each group individually
 Converting octal to hexadecimal
-	- Convert each digit to binary, making sure that the binary 	strings are 3 bits long
+	- Convert each digit to binary, making sure that the binary strings are 3 bits long
 	- Line up the binary number and split it into groups of 4
 	- Convert the groups to hexadecimal
 Converting hexadecimal to octal
-	- Convert each digit to binary, making sure that the binary 	strings are 4 bits long
+	- Convert each digit to binary, making sure that the binary strings are 4 bits long
 	- Line up the binary number and split it into groups of 3
 	- Convert the groups to octal
 Binary coded decimal number
@@ -48,4 +47,24 @@ Binary coded decimal number
 2's compliment
 	- Invert the number and add 1 to it
 Overflow
-	- Overflow occurs when the final carry bit is not equal to 	the leftmost bit
+	- Overflow occurs when the final carry bit is not equal to the leftmost bit
+Floating point representation
+	- 32 bits
+		- Sign bit, exponent, mantissa
+		- First bit is the sign bit (0 positive, 1 negative)
+		- Next 8 bits are the exponent (E)
+		- Next 23 bits are the mantissa (M)
+	- Steps:
+		- Convert the number to binary
+		- Move the decimal over so that there's only one digit to the left of the decimal
+		- Put in scientific notation
+		- Subtract the exponent given in scientific notation from 127 and convert to binary, that's the E
+		- Convert the rightmost side of the decimal to binary, that's the M. Fill it in left to right, not right to left
+Adding two floating point numbers
+	- Determine which number has the smallest exponent
+	- Right shift that number's mantissa E_1 - E_2 places
+	- Add the mantissa's to get the new mantissa
+	- Check for normalization, if it's not normalized right shift one and add one to the first E
+Multiplying and dividing floating point numbers
+	- Add (or subtract) exponents
+	- Multiply (or divide) mantissas
