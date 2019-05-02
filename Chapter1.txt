@@ -1,0 +1,134 @@
+
+XOR Gate
+	- Output is 0 (false) if and only if the inputs are the same
+XNOR Gate
+	- Output is 0 if and only if the inputs are different
+Precedence
+	- Parenthesis, NOT, AND, OR
+Minterm (m)
+	- Product, sum of products
+Maxterm (M)
+	- Sum, product of sums
+	- m_j = M_j'
+AND
+	- A * 0 = 0
+	- A * 1 = 1
+	- A * A = A
+	- A * A' = 1
+OR
+	- A + 0 = 0
+	- A + 1 = 1
+	- A + A = A
+	- A + A' = 1
+NOT
+	- 0' = 1
+	- 1' = 0
+	- (A')' = A
+Commutative law
+	- AB = BA
+	- A + B = B + A
+Distributive Law
+	- A(B + C) = AB + AC
+	- A + BC = (A + B)(A + C)
+Associative law
+	- A(BC) = (AB)C
+	- A + (B + C) = (A + B) + C
+Absorption Law
+	- A + AB = A
+	- A(A + B) = A
+De Morgan's Law
+	- (A + B)' = A' * B'
+	- (A * B)' = A' + B'
+Principle of Duality
+	- If an expression is valid in boolean algebra, the dual of that expression is also valid.
+	- To form a dual
+		- Replace all + with *
+		- Replace all * with +
+		- Replace all 1 with 0
+		- Replace all 0 with 1
+K-Maps
+	- The cells fill from left to right as
+		0, 1, 3, 2
+		4, 5, 7, 6
+		12, 13, 15, 14
+		8, 9, 11, 10
+	- Each cell that contains a 1 is part of the simplified boolean expression
+	- The rules are
+		- Group must be as large as possible
+		- Must be of any size 2^n
+		- Edges can wrap
+		- Groups can not contain a 0
+		- Groups can not be made along a diagonal
+		- Groups may overlap
+		- Each 1 must be in a group even if it's in a group by itself
+		- Must create as few groups as possible
+	- Don't care conditions
+		- If you can guarantee that certain input combinations never occur
+		- If some outputs aren't used in the rest of the circuit
+		- Can be a 1 or a 0, pick the one that grants the largest simplification
+Combinational Circuits
+	- Input variables, logic gates, output variables
+	- Given a problem statement, you must
+		- Determine number of inputs and outputs
+		- Derive the truth table
+		- Simplify the boolean expression for each output
+		- Draw the circuit
+	- Half adder
+		- Type of combinational circuit with 2 inputs, 2 outputs. Calculates the sum and the carry
+	- Full adder
+		- Type of combinational circuit with 3 inputs, 2 outputs. Calculates the sum and the carry
+Sequential Circuit
+	- Implements a combinational circuit and flip flops
+	- Flip flops
+		- SR
+		S	R	Q(t+1)	
+		0	0	Q(t)		No change
+		0	1	0		Clear to 0
+		1	0	1		Set to 1
+		1	1	?		Indeterminate
+
+		- JK
+		J	K	Q(t+1)
+		0	0	Q(t)		No change
+		0	1	0		Clear to 0
+		1	0	1		Set to 1
+		1	1	Q'(t)		Compliment
+
+		- D
+		D	Q(t+1)
+		0	0			Clear to 0
+		1	1			Set to 1
+
+		- T
+		T	Q(t+1)
+		0	Q(t)			No change
+		1	Q'(t)			Compliment
+FF Excitation Tables
+	- SR
+	Q(t)		Q(t+1)	S	R
+	0		0		0	X
+	0		1		1	0
+	1		0		0	1
+	1		1		X	0
+	- D
+	Q(t)		Q(t+1)	D
+	0		0		0
+	0		1		1
+	1		0		0
+	1		1		1
+	- JK
+	Q(t)		Q(t+1)	J	K
+	0		0		0	X
+	0		1		1	X
+	1		0		X	0
+	1		1		X	1
+	- T
+	Q(t)		Q(t+1)	T
+	0		0		0
+	0		1		1
+	1		0		1
+	1		1		0
+
+
+
+
