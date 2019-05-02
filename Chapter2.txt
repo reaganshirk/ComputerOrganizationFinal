@@ -1,0 +1,65 @@
+Decoders
+	- Size: n-to-m (n x m) where m is less than or equal to 2^n
+	- The decimal number of the input (i.e 011 = 3) goes to the that output (i.e D3)
+	- NAND Gate Decoder
+		E	A1	A2	D0	D1	D2	D3
+		0	0	0	0	1	1	1
+		0	0	1	1	0	1	1
+		0	1	0	1	1	0	1
+		0	1	1	1	1	1	0
+		1	X	X	1	1	1	1
+		- Fills opposite to a not NAND gate decoder (1 is usually along the diagonal with 0 everywhere else)
+	- Creating large decoders out of smaller ones
+		- 3 x 8 = Two 2 x 4
+		- Both decoders take the same enabler but one takes the NOT enabler while the other takes it with no gates. When one decoder is enabled the other is disabled
+Encoders
+	- Opposite of a decoder
+	- Size: m-to-n (m x n) where m is less than or equal to 2^n
+	- Outputs:
+		- A0 = D1 + D3 + D5 + D7
+		- A1 = D2 + D3 + D6 + D7
+		- A2 = D4 + D5 + D6 + D7
+Multiplexers
+	- Takes 2^n input lines and produces one output line
+	S1	S0	Y
+	0	0	I0
+	0	1	I1
+	1	0	I2
+	1	1	I3
+Registers
+	- A group of flip flops where all flip flops can store at least 1 bit of information
+	- Parallel loading
+		- When all bits of the register are loaded simultaneously with a common clock pulse transition
+	- Shift register
+		- A register capable of shifting its binary info in one or both directions
+		- One direction: unidirectional
+		- Both directions: bidirectional
+			S1	S0	Operation
+			0	0	No change
+			0	1	Shift right (up)
+			1	0	Shift left (down)
+			1	1	Parallel load
+Binary Counters
+	- Lower order bit is complimented after every count
+	- Other bits are complimented if all lower order bits are 1
+Memory Unit
+	- Writing data
+		- Apply desired address locations on address lines
+		- Apply data to data input lines
+		- Activate write
+	- Reading data
+		- Apply address of desired word
+		- Activate read
+		- Data output valid after specified access time
+	- RAM: Random access memory
+	- ROM
+		- RAM without write capability
+		- Really just a truth table
+	- PROM: Programmable ROM
+	- EEPROM: Electronically ereasable PROM	
+	- Standard memory unit
+		- Address line k
+		- Data input n
+		- 2^k words
+		- n bits per word
+		- Data output n
