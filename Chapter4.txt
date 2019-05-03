@@ -1,0 +1,80 @@
+Microoperations
+	- Operations executed on data that is stored in registers
+	- Shift, load, clear, etc
+Register Transfer Language
+	- Describes the possible microoperations, specifies source and destination registers
+	- R2 <-- R1 is a register load microoperation in RTL
+		- Register 1 is stored in register 2
+	- P: R2 <-- R1 is a control function microoperation in RTL
+		- If 	P = 1, then register 1 is stored in register 2
+	- Concurrent operations can be expressed in a signle line of RTL by separating operations with a comma
+		- T: R2 <-- R1, R1 <-- R3
+			- If T = 1, then R1 will be stored in R2 and R3 will be stored in R1
+Busses
+	- Busses are used as a way to efficiently transfer data between registers
+	- To produce an n-line bus for k registers, you need n multiplexers of size k x 1
+	- If you need a bus to transfer registers, the RTL will look like BUS <-- C, R1 <-- BUS
+	- If you know the bus already exists, R1 <-- C
+	- Tri State Buffers
+		- Way to make busses without multiplexers
+		- Need 1 tri state buffer for every multiplexer you would have (i.e 1 buffer for every line)
+		- A tri state buffer is a digital circuit that exhibits 3 states
+			- Two states are equivalent to logic 1 and 0 like normal gates
+			- Third state is a high impedance state
+				- High impedance = open circuit behavior, output is disconnected and does not have a logical significance
+		- Still only need 1 decoder
+Memory transfers
+	- Read: DR (data register) <-- M[AR] (address register)
+	- Write: M[AR] <-- DR
+		- Opposite of read
+Types of Microoperations
+	- Register Transfer
+	- Arithmetic
+		- Function table of an arithmetic circuit
+		Select/Input		Output		Microops
+		S1	S0	Cin	Y	D = A+Y+Cin		
+		0	0	0	B	D = A+B		Add
+		0	0	1	B	D = A+B+1		Add w/ carry
+		0	1	0	B'	D = A+B'		Sub w/ borrow
+		0	1	1	B'	D = A+B'+1		Subtract
+		1	0	0	0	D = A			Transfer A
+		1	0	1	0	D = A+1		Increment A
+		1	1	0	1	D = A-1		Decrement A
+		1	1	1	1	D = A			Transfer A
+	- Logic
+		- Bit-wise logic operations on the contents of 2 registers
+			- AND, OR, XOR
+		- P + Q: R1 <-- R2 OR R3
+			- Both are OR operations
+		- P + Q: R1 <-- R2 + R3
+			- First is OR, then arithmetic plus
+		- Truth table for 16 functions of 2 variables
+	X Y F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 F13 F14 F15
+	0 0 0  0  0  0  0  0  0  0  1  1  1   1   1   1   1   1
+	0 1 0  0  0  0  1  1  1  1  0  0  0   0   1   1   1   1
+	1 0 0  0  1  1  0  0  1  1  0  0  1   1   0   0   1   1
+	1 1 0  1  0  1  0  1  0  1  0  1  0   1   0   1   0   1
+			- For input 0, 0: first 8 are 0, last 8 are 1
+			- For input 0, 1: 0's, 1's alternate by groups of 4
+			- For input 1, 0: 0's, 1's alternate by groups of 2
+			- For input 1, 1: Each function alternates
+		- Four implemented functions
+		S1	S0	Operation
+		0	0	AND
+		0	1	OR
+		1	0	XOR
+		1	1	Compliment
+		- Applications
+			- Selective set
+				- Changes A's bits to 1 where B's bits are 1. OR operation
+			- Selective compliment
+				- Compliments A's bit where B's bit is 1. XOR operation
+			- Selective clear
+				- Clears A's bit to 0 where B's bit is 1. A AND NOT B operation
+	- Shift
+		- Logical shift (shl, shr)
+		- Circular shift (cil, cir)
+		- Arithmetic shift (ashl, ashr)
+			- Multiplies, divides by 2
+			- ashr: sign bit stays, rest moves right
+			- ashl: insert 0 at end, shift rest left
