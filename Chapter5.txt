@@ -1,0 +1,108 @@
+Three types of Addressing
+	- Immediate operand
+		- The 2nd part of the instruction (bits 0-11) is actually the operand data
+	- Direct addressing
+		- the 2nd part of the instruction specifies the address of the operand
+	- Indirect addressing
+		- The 2nd part of the instruction specifies the address in the memory in which the address of the operand is stored
+Computer Registers
+	Symbol	Bits		Name				Function
+	DR		16		Data register		Holds memory operation
+	AR		12		Address register		Holds memory address
+	AC		16		Accumulator		Processor register
+	IR		16		Instruction register	Holds instruction code
+	PC		12		Program counter		Holds instruction address
+	TR		16		Temporary register	Holds temporary data
+	INPR		8		Input register		Holds input character
+	OUTR		8		Output register		Holds output character
+Common Bus System
+	- See lecture slides to look at circuit diagram of this bus
+	- Bus must be implemented with multiplexers or tri-state buffers
+	- The load, INR, CLR lines of the registers are independent
+	- Writing to the memory unit is analagous to loading a register
+	- DR and AC are used for arithmetic operations
+	- Any register can recieve data from memory after read except AC, INPR
+	- The E bit is the "extended" AC bit
+	- AR and PC are only 12 bits
+Computer instructions
+	- Basic format
+		- Memory reference instruction
+		- Register reference instruction
+		- Input/output instruction
+Instruction cycle
+	- Fetch an instruction from memory
+	- Decode the instruction
+	- Read the effective address from memory
+	- Execute the instruction
+Different cases
+	- D7'I': Memory reference with direct addressing
+	- D7'I: Memory reference with indirect addressing
+	- D7I': Register reference instruction
+	- D7I: I/O instruction
+	- D7'I'T3: Start executing register
+	- D7'IT3: Start executing I/O
+		- AR <-- M[AR]
+M-R Instructions
+	- AND
+		- D0T4: DR <-- M[AR] (implied SC <-- SC + 1)
+		- D0T5: AC <-- AC AND DR, DC <-- 0
+	- ADD
+		- D1T4: DR <-- M[AR]
+		- D1T5: AC <-- AC + DR, E <-- Cout, SC <-- 0
+	- LDA
+		- D2T4: DR <-- M[AR]
+		- D2T5: AC <-- DR, SC <-- 0
+	- STA
+		- D3T4: M[AR] <-- AC, SC <-- 0
+	- BUN
+		- D4T4: PC <-- AR, SC <-- 0
+	- BSA
+		- D5T4: M[AR] <-- PC, AR <-- AR + 1
+		- D5T5: PC <-- AR, SC <-- 0
+	- ISZ
+		- D6T4: DR <-- M[AR]
+		- D6T5: DR <-- DR + 1
+		- D6T6: M[AR] <-- DR, if DR = 0, PC <-- PC + 1, SC <-- 0
+I/O Instructions
+	- INPR and OUTR hold 8 bits
+	- FGI is a one bit flag associated with INPR, FGO is a one bit flag assocciated with OUTR
+	- When a key is pressed, the 8-bit code is shifted into INPR and FGI is set to 1
+		- FGI = 1 means the data is ready to be read
+		- After transferring INPR to AC, the computer should clear FGI
+	- When output is ready for a character, FGO is set to 1
+		- FGO = 1 means the data is ready to go out
+		- Computer clears FGO after the data has gone out
+Interrupts
+	- Polling is necessary in some applications because there may not be other processing that can be done until input or output is performed
+	- Interrupt control can be more efficient in some cases
+		- I/O interrupts the computer to let it know a transfer is ready
+	- When the IEN flag is set to 1, FGI and FGO interrupt the computer
+		- IEN gives the programmer control of whether to enable the enterrupt facility
+	- Interrupt flag R = 1 when either FGI or FGO = 1 and IEN = 1
+		- R = (FGI + FGO)(IEN)
+	- Setting R only happens during the execution phase
+		- TO'T1'T2'(IEN)(FGI+FGO): R <-- 1
+			- TO'T1'T2' is put instead of T3 because it allows for R to be set anytime during the execute cycle of an instruction 
+	- When R = 0, normal instruction cycle is performed
+	- When R = 1, the fetch phase is modified
+		- Store PG in memory location 0
+		- Branch to location 1
+		- Clear IEN, R, SC
+		- RT0: AR <-- 0, TR <-- PC
+		- RT1: M[AR] <-- TR, PC <-- 0
+		- RT2: PC <-- PC + 1, IEN <-- 0, SC <-- 0
+Control logic gates
+	- Inputs
+		- 2 decoders
+		- 1 flip flop
+		- Bits 0-11 of IR
+		- Bits 0-15 of AC to check if AC = 0 and sign (AC(15))
+		- Bits 0 - 15 of DR to check if DR = 0
+		- 7 flip flops
+	- Inputs go into control logic gates, outputs come out
+	- Outputs (Signals to control)
+		- 9 registers
+		- R/W of memory
+		- Set clear, complement FF's
+		- S2, S1, S0 to select a register for bus
+		- AC Adder and logic circuit 
