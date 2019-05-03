@@ -31,15 +31,15 @@ Types of Microoperations
 	- Register Transfer
 	- Arithmetic
 		- Function table of an arithmetic circuit
-		Select/Input		Output		Microops
+		Select/Input			Output		Microops
 		S1	S0	Cin	Y	D = A+Y+Cin		
-		0	0	0	B	D = A+B		Add
+		0	0	0	B	D = A+B			Add
 		0	0	1	B	D = A+B+1		Add w/ carry
 		0	1	0	B'	D = A+B'		Sub w/ borrow
 		0	1	1	B'	D = A+B'+1		Subtract
 		1	0	0	0	D = A			Transfer A
-		1	0	1	0	D = A+1		Increment A
-		1	1	0	1	D = A-1		Decrement A
+		1	0	1	0	D = A+1			Increment A
+		1	1	0	1	D = A-1			Decrement A
 		1	1	1	1	D = A			Transfer A
 	- Logic
 		- Bit-wise logic operations on the contents of 2 registers
