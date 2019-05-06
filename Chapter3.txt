@@ -3,7 +3,7 @@ Converting binary to decimal:
 	- Multiply each bit by 2^n starting at n = 0
 	- Start with the rightmost bit
 	- Take the sum for the result
-Converting decimal to octal:
+Converting octal to decimal:
 	- Multiply each bit by 8^n starting at n = 0
 	- Start with the rightmost bit
 	- Take the sum for the result
@@ -28,6 +28,12 @@ Converting decimal to octal
 	- Divide the number by 8
 	- Keep track of the remainder
 	- Final number goes bottom to top
+Converting decimal to hexadecimal
+	- Divide the decimal number by 16
+	- Keep track of the remainder
+	- Continue to divide by 16 until you reach 0
+	- Starting from bottom, the remainders are the new number
+	- Remember the decimal number for the hexadecimal letters
 Converting binary to octal
 	- Split the number into groups of 3
 	- Convert each binary number to their decimal equivalent
